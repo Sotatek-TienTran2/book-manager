@@ -1,0 +1,42 @@
+syntax = "proto3";
+package proto;
+option go_package = "./service1";
+
+message FindBookByIdAuthorRequest {
+    int64 idAuthor = 1;
+}
+
+message FindBookByIdAuthorResponse {
+    int64 idBook = 1;
+    string nameBook = 2;
+    string categoryBook = 3;
+}
+
+message BooksResponse {
+	repeated FindBookByIdAuthorResponse books_response = 1;
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+message LoginResponse {
+    string  Status = 1;
+	string Username = 2;
+	string Token = 3;
+    int64 ExpireAt = 4;
+}
+
+message LogoutRequest{
+    string Token = 1;
+}
+
+message LogoutResponse{
+    string status = 1;
+}
+
+service AddAuthorService {
+    rpc FindBookByIdAuthor (FindBookByIdAuthorRequest) returns (BooksResponse);
+    rpc LoginGPRC (LoginRequest) returns (LoginResponse);
+    rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
